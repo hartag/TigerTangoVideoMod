@@ -1562,8 +1562,39 @@ set '$fadeIndicator1' 0
 					<text2 fontsize="28" color="textoff2" align="center" weight="bold" format="%counter" important="true"/>
 				</textzone>
 			</group>
-		</group>
 
+			<!-- Buttons for controlling tanda counter and tanda length -->
+			<group name="tanda_counter" x="+25" y="+56">
+				<button class="button_main" textsize="9" 
+					textaction="var '$tangoTandaLength' ? get_text '`get_var $tangoTandaLength` Song Tandas' : get_text '3 Song Tandas'"
+					action="var_equal '$tangoTandaLength' 3 ? set '$tangoTandaLength' 4 : set '$tangoTandaLength' 3"
+					query="false">
+					<pos x="+0" y="+0"/>
+					<size width="84" height="20"/>
+                	<tooltip>Select the length of tandas consisting of tango songs</tooltip>
+				</button>
+
+				<button class="button_main" textsize="9" 
+					text="Start Counter"
+					action="not var '$songCounterRunning' ? set '$songCounterRunning' 1 & (not var '$tangoTandaLength' ? set '$tangoTandaLength' 3) & set '$tandaLength' '$tangoTandaLength' & repeat_start 'songCounter' 1000ms & (param_equal `deck active get_loaded_song 'grouping' & param_lowercase` 'cortina' ? set '$tandaStart' `get_automix_position`) & (param_equal `deck active get_loaded_song 'genre' & param_lowercase` 'tango' ? set '$tandaLength' '$tangoTandaLength' : set '$tandaLength' 3) & (param_add `get_var '$tandaStart' & param_invert` `get_automix_position` & set '$tandaCounter')"
+                    dblclick="repeat_stop 'songCounter' & set '$songCounterRunning' 0 & set '$tandaCounter' 0"
+					query="get_var '$songCounterRunning'">
+					<pos x="+84+12" y="+0"/>
+					<size width="84" height="20"/>
+                	<tooltip>Click to Start the song counter. Double-click to stop it.</tooltip>
+				</button>
+
+				<button class="button_main" textsize="9" 
+					textaction="var '$songCounterRunning' ? get_text 'Song `get_var $tandaCounter`/`get_var $tandaLength`' : get_text 'Counter stopped'"
+					action="var '$songCounterRunning' ? set '$tandaStart' `get_var '$tandaStart' & param_cast 'integer' & param_add -1`"
+					dblclick="var '$songCounterRunning' ? set '$tandaStart' `get_automix_position & param_cast 'integer'`"
+					query="false">
+					<pos x="+84+12+84+12" y="+0"/>
+					<size width="84" height="20"/>
+                	<tooltip>Double-click to set the song counter to 0 and single-click to increment the counter</tooltip>
+				</button>
+			</group>
+		</group>
 
 		<group name="beat_matcher" x="858" y="8">
 		<group name="beatbar" x="+40" y="+2">
