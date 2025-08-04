@@ -1563,11 +1563,72 @@ set '$fadeIndicator1' 0
 				</textzone>
 			</group>
 
+			<!-- Window for configuring the song counter -->
+			set '$cortinaDetectTag' 'grouping'
+			set '$cortinaDetectValue' 'cortina'
+
+<window name="CortinaDetectCriteria" width="400" height="200" posx="960" posy="center" shown="false" resize="false" color="#424346">
+
+	<visual x="+0" y="+0" width="400" height="200">
+		<off color="background" border_size="1" border="bordercolor"/>
+	</visual>
+
+	<textzone x="+20" y="+20" width="360" height="30">
+		<background color="black"/>
+		<text text="Configure Cortina Detection" font="Arial" fontsize="30"
+		color="#FFFFFFFF" align="center"/>
+	</textzone>
+	
+    <textzone>
+		<pos x="+20" y="+60"/>
+		<size width="180" height="40"/>
+		<text font="Arial" fontsize="16" color="#FFFFFFFF" text="Cortina-detection tag:"/>
+	</textzone>
+
+    <textzone>
+		<pos x="+220" y="+60"/>
+		<size width="100" height="40"/>
+		<text font="Arial" fontsize="16" color="#FFFFFFFF" action="get_var '$cortinaDetectTag'"/>
+	</textzone>
+
+	<button class="button_main" action="set_var_dialog '$cortinaDetectTag' 'Enter the tag used for detecting when a cortina is loaded.'">
+		<pos x="+320" y="+60"/>
+		<size width="60" height="40"/>
+		<text font="Arial" fontsize="20" align="center" text="Change"/>
+	</button>
+
+	<textzone>
+		<pos x="+20" y="+110"/>
+		<size width="200" height="40"/>
+		<text font="Arial" fontsize="16" color="#FFFFFFFF" text="Cortina-detection value:"/>
+	</textzone>
+
+    <textzone>
+		<pos x="+220" y="+110"/>
+		<size width="100" height="40"/>
+		<text font="Arial" fontsize="16" color="#FFFFFFFF" action="get_var '$cortinaDetectValue'"/>
+	</textzone>
+
+	<button class="button_main" action="set_var_d•ialog '$cortinaDetectValue' 'Enter the value used for detecting when a cortina is loaded.'">
+		<pos x="+320" y="+110"/>
+		<size width="60" height="40"/>
+		<text font="Arial" fontsize="20" align="center" text="Change"/>
+	</button>
+
+  <button x="+160" y="+160" width="80" height="40" action="show_window 'CortinaDetectCriteria' off">
+		<text color="#FFFFFF" align="center" text="Close Window" fontsize="20"/>
+    <off      color="#777777" color2="#666666" radius="6"/>
+    <over     color="#136b87" color2="#555555"/>
+    <selected color="#444444" color2="#333333"/>
+  </button>
+</window>
+
 			<!-- Buttons for controlling tanda counter and tanda length -->
 			<group name="tanda_counter" x="+25" y="+56">
 				<button class="button_main" textsize="9" 
 					textaction="var '$tangoTandaLength' ? get_text '`get_var $tangoTandaLength` Song Tandas' : get_text '3 Song Tandas'"
-					action="var_equal '$tangoTandaLength' 3 ? set '$tangoTandaLength' 4 : set '$tangoTandaLength' 3"
+                        action="var_equal '$tangoTandaLength' 3 ? set '$tangoTandaLength' 4 : set '$tangoTandaLength' 3"
+					rightclick="show_window 'CortinaDetectCriteria'"
 					query="false">
 					<pos x="+0" y="+0"/>
 					<size width="84" height="20"/>
@@ -1576,7 +1637,7 @@ set '$fadeIndicator1' 0
 
 				<button class="button_main" textsize="9" 
 					text="Start Counter"
-					action="not var '$songCounterRunning' ? set '$songCounterRunning' 1 & (not var '$tangoTandaLength' ? set '$tangoTandaLength' 3) & set '$tandaLength' '$tangoTandaLength' & repeat_start 'songCounter' 1000ms & (param_equal `deck active get_loaded_song 'grouping' & param_lowercase` 'cortina' ? set '$tandaStart' `get_automix_position`) & (param_equal `deck active get_loaded_song 'genre' & param_lowercase` 'tango' ? set '$tandaLength' '$tangoTandaLength' : set '$tandaLength' 3) & (param_add `get_var '$tandaStart' & param_invert` `get_automix_position` & set '$tandaCounter')"
+					action="not var '$songCounterRunning' ? set '$songCounterRunning' 1 & (not var '$tangoTandaLength' ? set '$tangoTandaLength' 3) & set '$tandaLength' 3 & repeat_start 'songCounter' 1000ms & (param_equal `deck active get_loaded_song 'grouping' & param_lowercase` 'cortina' ? set '$tandaStart' `get_automix_position`) & (param_equal `deck active get_loaded_song 'genre' & param_lowercase` 'tango' ? set '$tandaLength' '$tangoTandaLength' : set '$tandaLength' 3) & (param_add `get_var '$tandaStart' & param_invert` `get_automix_position` & set '$tandaCounter')"
                     dblclick="repeat_stop 'songCounter' & set '$songCounterRunning' 0 & set '$tandaCounter' 0"
 					query="get_var '$songCounterRunning'">
 					<pos x="+84+12" y="+0"/>
@@ -2714,4 +2775,8 @@ set '$fadeIndicator1' 0
 			setting 'autoSortCues' on &
 			deck 1 setting 'smartLoop' off & deck 2 setting 'smartLoop' off
 					"/>
+
+	<oninit action="set '$cortinaDetectTag' 'grouping'"/>
+	<oninit action="set '$cortinaDetectValue' 'cortina'"/>
+
 </skin>
