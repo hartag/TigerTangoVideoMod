@@ -4,8 +4,6 @@
 <background x="1817" y="0" width="100" height="100" repeat="true"/>
 <customicons file="icons_daylight.png" nb="64" nbx="16" condition="var_equal '@$colorscheme' 2"/>
 
-set '$cortinaDetectTag' 0
-set '$cortinaDetectValue' 'cortina'
 set '$fadeIndicator2' 0
 set '$fadeIndicator1' 0
 <!-- #1e1e20 -->
@@ -1565,66 +1563,86 @@ set '$fadeIndicator1' 0
 				</textzone>
 			</group>
 
-			<!-- Window for configuring the song counter -->
-			set '$cortinaDetectTag' 0
-			set '$cortinaDetectValue' 'cortina'
-
-<window name="CortinaDetectCriteria" width="400" height="200" posx="960" posy="center" shown="false" resize="false" color="#424346">
+<!-- Window for configuring the song counter -->
+<window name="SongCounterConfig" width="400" height="200" posx="960" posy="center" shown="false" resize="false" color="#424346">
 
 	<visual x="+0" y="+0" width="400" height="200">
 		<off color="background" border_size="1" border="bordercolor"/>
 	</visual>
 
 	<visual x="+20" y="+17" width="360" height="38">
-		<off color="black" border_size="1" border="white"/>
+		<off color="black" border_size="1" border="textoff"/>
 	</visual>
 
 	<textzone x="+20" y="+20" width="360" height="30">
-		<text text="Configure Cortina Detection" font="Arial" fontsize="20"
-		color="#FFFFFFFF" align="center"/>
+		<text text="Song Counter Configuration" font="Arial" fontsize="20"
+		color="textoff" align="center"/>
 	</textzone>
 	
     <textzone>
 		<pos x="+20" y="+60"/>
-		<size width="180" height="30"/>
-		<text font="Arial" fontsize="16" color="#FFFFFFFF" text="Cortina-detection tag:"/>
+		<size width="180" height="20"/>
+		<text font="Arial" fontsize="16" color="textoff" text="Cortina-detection tag:"/>
 	</textzone>
 
     <textzone>
 		<pos x="+220" y="+60"/>
-		<size width="100" height="30"/>
-		<text font="Arial" fontsize="16" color="#FFFFFFFF" 
-			action="var_equal '$cortinaDetectTag' 0 ? get_text 'grouping' :
-			var_equal '$cortinaDetectTag' 1 ? get_text 'title' :
-			var_equal '$cortinaDetectTag' 2 ? get_text 'artist' : get_text 'genre'"/>
+		<size width="100" height="20"/>
+		<text font="Arial" fontsize="16" color="textoff" 
+			action="var_equal '@$cortinaDetectTag' 0 ? get_text 'grouping' :
+			var_equal '@$cortinaDetectTag' 1 ? get_text 'title' :
+			var_equal '@$cortinaDetectTag' 2 ? get_text 'artist' : get_text 'genre'"/>
 	</textzone>
 
-	<button class="button_main" action="cycle '$cortinaDetectTag' 4">
+	<button class="button_main" action="cycle '@$cortinaDetectTag' 4">
 		<pos x="+320" y="+60"/>
-		<size width="60" height="30"/>
-		<text font="Arial" fontsize="16" align="center" text="Change"/>
-		<tooltip>Cycle through tags that can be used for detecting a cortina.</tooltip>
+		<size width="60" height="20"/>
+		<text font="Arial" fontsize="9" align="center" text="Change"/>
+		<tooltip>Select the tag used for detecting that a cortina 
+		\nis loaded on the active deck. A cortina is 
+		\ndetected whenever the selected tag contains the 
+		\nword &quot;Cortina&quot;. Letter case is not important.</tooltip>
 	</button>
 
 	<textzone>
-		<pos x="+20" y="+100"/>
-		<size width="180" height="30"/>
-		<text font="Arial" fontsize="16" color="#FFFFFFFF" text="Cortina-detection value:"/>
+		<pos x="+20" y="+90"/>
+		<size width="180" height="20"/>
+		<text font="Arial" fontsize="16" color="textoff" text="Length of Tango tandas:"/>
 	</textzone>
 
     <textzone>
-		<pos x="+220" y="+100"/>
-		<size width="100" height="30"/>
-		<text font="Arial" fontsize="16" color="#FFFFFFFF" action="get_var '$cortinaDetectValue'"/>
+		<pos x="+220" y="+90"/>
+		<size width="100" height="20"/>
+		<text font="Arial" fontsize="16" color="textoff" action="var_equal '@$tangoTandaLength' 3 ? get_text '3' : get_text '4'"/>
 	</textzone>
 
-	<button class="button_main" action="set_var_dialog '$cortinaDetectValue' 'Enter the value used for detecting when a cortina is loaded.'">
-		<pos x="+320" y="+100"/>
-		<size width="60" height="30"/>
-		<text font="Arial" fontsize="16" align="center" text="Change"/>
+	<button class="button_main" action="var_equal '@$tangoTandaLength' 4 ? set '@$tangoTandaLength' 3 : set '@$tangoTandaLength' 4">
+		<pos x="+320" y="+90"/>
+		<size width="60" height="20"/>
+		<text font="Arial" fontsize="9" align="center" text="Change"/>
+		<tooltip>Set the length of tandas consisting of songs with genre &quot;Tango&quot;</tooltip>
 	</button>
 
-	<button class="button_main" action="show_window 'CortinaDetectCriteria' off">
+	<textzone>
+		<pos x="+20" y="+120"/>
+		<size width="180" height="20"/>
+		<text font="Arial" fontsize="16" color="textoff" text="Length of Vals tandas:"/>
+	</textzone>
+
+    <textzone>
+		<pos x="+220" y="+120"/>
+		<size width="100" height="20"/>
+		<text font="Arial" fontsize="16" color="textoff" action="var_equal '@$valsTandaLength' 4 ? get_text '4' : get_text '3'"/>
+	</textzone>
+
+	<button class="button_main" action="var_equal '@$valsTandaLength' 3 ? set '@$valsTandaLength' 4 : set '@$valsTandaLength' 3">
+		<pos x="+320" y="+120"/>
+		<size width="60" height="20"/>
+		<text font="Arial" fontsize="9" align="center" text="Change"/>
+		<tooltip>Set the length of tandas consisting of songs with genre &quot;Vals&quot;</tooltip>
+	</button>
+
+	<button class="button_main" action="show_window 'SongCounterConfig' off">
 		<pos x="+160" y="+150"/>
 		<size width="60" height="30"/>
 		<text align="center" text="Close" fontsize="16"/>
@@ -1634,27 +1652,35 @@ set '$fadeIndicator1' 0
 			<!-- Buttons for controlling tanda counter and tanda length -->
 			<group name="tanda_counter" x="+25" y="+56">
 				<button class="button_main" textsize="9" 
-					textaction="var '$tangoTandaLength' ? get_text '`get_var $tangoTandaLength` Song Tandas' : get_text '3 Song Tandas'"
-                        action="var_equal '$tangoTandaLength' 3 ? set '$tangoTandaLength' 4 : set '$tangoTandaLength' 3"
-					rightclick="show_window 'CortinaDetectCriteria'"
+					textaction="var_equal '@$tangoTandaLength' 3 ? get_text '3 Song Tandas' : get_text '4 Song Tandas'"
+                        action="var_equal '@$tangoTandaLength' 4 ? set '@$tangoTandaLength' 3 : set '@$tangoTandaLength' 4"
+					rightclick="show_window 'SongCounterConfig'"
 					query="false">
 					<pos x="+0" y="+0"/>
 					<size width="84" height="20"/>
-                	<tooltip>Left click to select the length of tandas consisting of songs with a genre of &quot;tango&quot;. Right click to configure how cortinas are detected.</tooltip>
+                	<tooltip>Left click to select the length of tandas consisting of songs with genre &quot;tango&quot;. Right click to configure the song counter.</tooltip>
 				</button>
 
 				<button class="button_main" textsize="9" 
-					text="Start Counter"
-					action="not var '$songCounterRunning' ? set '$songCounterRunning' 1 & (not var '$tangoTandaLength' ? set '$tangoTandaLength' 3) &
-					 (not var '$cortinaDetectValue' ? set '$cortinaDetectValue' 'cortina') &
+					textaction="var '$songCounterRunning' ? get_text 'Stop Counter' : get_text 'Start Counter'"
+					action="not var '$songCounterRunning' ? set '$songCounterRunning' 1 &
+					(not var '@$tangoTandaLength' ? set '@$tangoTandaLength' 4) &
+					(not var '@$valsTandaLength' ? set '@$valsTandaLength' 3) &
  set '$tandaLength' 3 & repeat_start 'songCounter' 1000ms &
- (var_equal '$cortinaDetectTag' 0 ? set '$tagValue' `deck active get_loaded_song 'grouping'` :
- var_equal '$cortinaDetectTag' 1 ? set '$tagValue' `deck active get_loaded_song 'title'` :
- var_equal '$cortinaDetectTag' 2 ? set '$tagValue' `deck active get_loaded_song 'artist'` :
+ (var_equal '@$cortinaDetectTag' 0 ? set '$tagValue' `deck active get_loaded_song 'grouping'` :
+ var_equal '@$cortinaDetectTag' 1 ? set '$tagValue' `deck active get_loaded_song 'title'` :
+ var_equal '@$cortinaDetectTag' 2 ? set '$tagValue' `deck active get_loaded_song 'artist'` :
  set '$tagValue' `deck active get_loaded_song 'genre'`) &
  (get_var '$tagValue' & param_lowercase & param_contains 'cortina' ? set '$cortinaIsLoaded' 1 : set '$cortinaIsLoaded' 0) &
  (var '$cortinaIsLoaded' ? set '$tandaStart' `get_automix_position`) &
- (param_equal `deck active get_loaded_song 'genre' & param_lowercase` 'tango' ? set '$tandaLength' '$tangoTandaLength' : set '$tandaLength' 3) &
+ (var '$cortinaIsLoaded' ?
+   (param_equal `get_automix_song 'genre' 1 & param_lowercase` 'tango' ? set '$tandaLength' '@$tangoTandaLength' : 
+     param_equal `get_automix_song 'genre' 1 & param_lowercase` 'vals' ? set '$tandaLength' '@$valsTandaLength' : 
+     set '$tandaLength' 3) :
+   (param_equal `deck active get_loaded_song 'genre' & param_lowercase` 'tango' ? set '$tandaLength' '@$tangoTandaLength' : 
+     param_equal `deck active get_loaded_song 'genre' & param_lowercase` 'vals' ? set '$tandaLength' '@$valsTandaLength' : 
+     set '$tandaLength' 3)
+ ) &
  (param_add `get_var '$tandaStart' & param_invert` `get_automix_position` & set '$tandaCounter')"
                     dblclick="repeat_stop 'songCounter' & set '$songCounterRunning' 0 & set '$tandaCounter' 0"
 					query="var '$songCounterRunning'">
@@ -2793,8 +2819,5 @@ set '$fadeIndicator1' 0
 			setting 'autoSortCues' on &
 			deck 1 setting 'smartLoop' off & deck 2 setting 'smartLoop' off
 					"/>
-
-	<oninit action="set '$cortinaDetectTag' 0"/>
-	<oninit action="set '$cortinaDetectValue' 'cortina'"/>
 
 </skin>
