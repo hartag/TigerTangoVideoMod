@@ -1598,10 +1598,7 @@ set '$fadeIndicator1' 0
 		<pos x="+320" y="+60"/>
 		<size width="60" height="20"/>
 		<text font="Arial" fontsize="9" align="center" text="Change"/>
-		<tooltip>Select the tag used for detecting that a cortina 
-		\nis loaded on the active deck. A cortina is 
-		\ndetected whenever the selected tag contains the 
-		\nword &quot;Cortina&quot;. Letter case is not important.</tooltip>
+		<tooltip>Select the tag used for detecting that a cortina is loaded on the\nactive deck. A cortina is detected whenever the selected tag\ncontains the word &quot;Cortina&quot;. Letter case is not important.</tooltip>
 	</button>
 
 	<textzone>
@@ -1667,6 +1664,7 @@ set '$fadeIndicator1' 0
 					(not var '@$tangoTandaLength' ? set '@$tangoTandaLength' 4) &
 					(not var '@$valsTandaLength' ? set '@$valsTandaLength' 3) &
  set '$tandaLength' 3 & repeat_start 'songCounter' 1000ms &
+ set '$songCounterReady' `deck active loaded` &
  (var_equal '@$cortinaDetectTag' 0 ? set '$tagValue' `deck active get_loaded_song 'grouping'` :
  var_equal '@$cortinaDetectTag' 1 ? set '$tagValue' `deck active get_loaded_song 'title'` :
  var_equal '@$cortinaDetectTag' 2 ? set '$tagValue' `deck active get_loaded_song 'artist'` :
@@ -1682,7 +1680,7 @@ set '$fadeIndicator1' 0
      set '$tandaLength' 3)
  ) &
  (param_add `get_var '$tandaStart' & param_invert` `get_automix_position` & set '$tandaCounter')"
-                    dblclick="repeat_stop 'songCounter' & set '$songCounterRunning' 0 & set '$tandaCounter' 0"
+                    dblclick="repeat_stop 'songCounter' & set '$songCounterRunning' 0 & set '$songCounterReady' 0 & set '$tandaCounter' 0"
 					query="var '$songCounterRunning'">
 					<pos x="+84+12" y="+0"/>
 					<size width="84" height="20"/>
@@ -1690,7 +1688,7 @@ set '$fadeIndicator1' 0
 				</button>
 
 				<button class="button_main" textsize="9" 
-					textaction="var '$songCounterRunning' ? get_text 'Song `get_var $tandaCounter`/`get_var $tandaLength`' : get_text 'Counter stopped'"
+					textaction="var '$songCounterRunning' ? var '$songCounterReady' ? get_text 'Song `get_var $tandaCounter`/`get_var $tandaLength`' : get_text 'No song loaded' : get_text 'Counter stopped'"
 					action="var '$songCounterRunning' ? set '$tandaStart' `get_var '$tandaStart' & param_cast 'integer' & param_add -1`"
 					dblclick="var '$songCounterRunning' ? set '$tandaStart' `get_automix_position & param_cast 'integer'`"
 					query="false">
