@@ -1,0 +1,66 @@
+<h1 id="a-song-counter-for-the-tigertango-skin">A Song Counter for the
+TigerTango Skin</h1>
+<h2 id="introduction">Introduction</h2>
+<p>This modification of the <a
+href="https://github.sericson0/TigerTango">TigerTango skin</a> has a
+song counter which allows video skins to display the position of the
+currently playing song in the tanda.</p>
+<p>Three buttons have been added below the Master VU and CPU usage
+meters.<br />
+The first one allows the user to toggle between 4 and 3 song Tango
+tandas with a left click. Right clicking the button opens a Song Counter
+Configuration dialog which will be explained below.</p>
+<p>The second button is for starting and stopping the counter. Single
+Clicking it starts the counter while double clicking it stops the
+counter.</p>
+<p>The third button displays the state of the counter: "Counter stopped"
+when the counter is turned off and "Song x/y" when the counter is on,
+where x is the position in the tanda of the currently playing song and y
+is the number of songs in the current tanda. If for any reason the
+counter gets out of sync or loses track of where the song is in the
+tanda, double clicking this button resets the counter to 0 while
+subsequent single clicks can be used to increment the counter until it
+shows the correct position in the tanda.</p>
+<h2 id="the-song-counter-configuration-dialog">The Song Counter
+Configuration Dialog</h2>
+<p>Right clicking on the "3/4 Song Tandas" button opens the
+configuration<br />
+dialog for the song counter. There are three settings and they are saved
+and remembered so it isn't necessary to set them each time VirtualDJ is
+launched.</p>
+<ul>
+<li><p><em>Cortina detection tag:</em> This setting selects the tag that
+is used for detecting that a cortina is loaded on the active deck. The
+criteria for determining that a cortina is loaded is whenever this tag
+contains the word "Cortina". The check for "Cortina" is case
+insensitive, so it does not matter if it is written in lowercase,
+uppercase or a mixture of the two. The default setting is
+"grouping".</p></li>
+<li><p><em>Length of Tango tandas:</em> this sets the number of songs
+that make up<br />
+tandas of songs with genre "Tango". The available options are 3 and 4
+with 4 being the default value.</p></li>
+<li><p><em>Length of Vals tandas:</em> this sets the length of tandas
+consisting of songs with genre "Vals". The available options are 3 and 4
+with 3 being the default value.</p></li>
+</ul>
+<h2 id="information-for-video-skins">Information for Video Skins</h2>
+<p>The song counter creates a number of global variables which contain
+information that video skins can either use or display. These are:</p>
+<ul>
+<li><p><em>tandaCounter:</em> A number indicating the position of the
+playing song in the current tanda.</p></li>
+<li><p><em>Tanda length:</em> A number indicating the number of songs (3
+or 4) in the current tanda.</p></li>
+<li><p><em>isCortinaLoaded:</em> A 0/1 variable that indicates if a
+cortina is loaded on the active deck. It is 1 (or true or on) when a
+cortina is loaded and 0 (or false or off) when anything other than a
+cortina is loaded.</p></li>
+<li><p><em>songCounterRunning:</em> A 0/1 variable that indicates if the
+song counter is operating. It is 1 (or true or on) when the song counter
+is running and 0 (or false or off) when the counter is stopped.</p></li>
+</ul>
+<p>The TigerTangoVideo folder contains an example skin
+"TigerTangoVideoWithSongCounter". This is a modification of the
+TigerTangoVideo skin which demonstrates how the song counter variables
+can be used in a video skin.</p>
