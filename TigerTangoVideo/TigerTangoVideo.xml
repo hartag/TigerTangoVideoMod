@@ -126,10 +126,10 @@
 					<text fontsize="56" color="orangetext" weight="bold"
 							action="var_equal '$songCounterRunning' 0 ?
 									var_equal '@$hideGenre' 1 ? '' : (get_genre & param_uppercase) : (
-										var_equal '$tandaLength' 1 ? get_text 'CORTINA' :
+										(var '@$hideCortina' && var_equal '$tandaLength' 1) ? get_text 'CORTINA' :
 									(
-									var_equal '@$hideGenre' 1 ? (get_text '`get_var $tandaCounter`/`get_var $tandaLength`') :
-									get_text '`get_genre & param_uppercase` `get_var $tandaCounter`/`get_var $tandaLength`')
+									var_equal '@$hideGenre' 1 ? (var_not_equal '$tandaLength' 1 ? get_text '`get_var $tandaCounter`/`get_var $tandaLength`') :
+									(var_not_equal '$tandaLength' 1 ? get_text '`get_genre & param_uppercase` `get_var $tandaCounter`/`get_var $tandaLength`': (get_genre & param_uppercase)))
 									)"/>
 
 				</textzone>
@@ -137,15 +137,15 @@
 				<textzone group="horizontal" align="center" attachX="both" scroll="yes">
 					<pos x="+0" y="+75"/>
 					<size width="1920-500" height="75"/>
-					<text fontsize="56" color="darktext" weight="bold" action="get_artist_before_feat & param_uppercase"/>
-					<text fontsize="56" color="darktext" weight="regular" action="get_featuring_after_artist & param_uppercase"/>
+					<text fontsize="56" color="darktext" weight="bold" action="(var '@$hideCortina' && var_equal '$tandaLength' 1) ? : get_artist_before_feat & param_uppercase"/>
+					<text fontsize="56" color="darktext" weight="regular" action="(var '@$hideCortina' && var_equal '$tandaLength' 1) ? : get_featuring_after_artist & param_uppercase"/>
 				</textzone>
 
 				<!-- Track title -->
 				<textzone group="horizontal" align="center" attachX="both" scroll="yes">
 					<pos x="+0" y="+140"/>
 					<size width="1920-500" height="100"/>
-					<text fontsize="56" color="orangetext" weight="bold" action="get_title_before_remix 'clean' & param_uppercase"/>
+					<text fontsize="56" color="orangetext" weight="bold" action="(var '@$hideCortina' && var_equal '$tandaLength' 1) ? : get_title_before_remix 'clean' & param_uppercase"/>
 				</textzone>
 			</group>
 

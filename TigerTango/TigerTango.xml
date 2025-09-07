@@ -1424,9 +1424,14 @@ ________________________________________________________________________________
 			<tooltip>Display song lyrics.\nLyrics taken from &quot;Comments&quot;\nmetadata and displayed on video</tooltip>
 		</button>
 		<button class="button_master" x="+250" y="+0" action="toggle '@$hideNextTrack'"
-				textsize="14" height="30" width="110" query="var_equal '@$hideNextTrack' 0 ? true : false"
+				textsize="14" height="19" width="110" query="var_equal '@$hideNextTrack' 0 ? true : false"
 				text="SHOW NEXT">
 			<tooltip>Display next track.</tooltip>
+		</button>
+				<button class="button_master" x="+250" y="+23" action="toggle '@$hideGenre'"
+				textsize="14" height="19" width="110" query="var_equal '@$hideGenre' 0 ? true : false"
+				text="SHOW GENRE">
+			<tooltip>Display track Genre.</tooltip>
 		</button>
 	</group>
 
@@ -1450,10 +1455,10 @@ ________________________________________________________________________________
 				 			 		get_text 'C ─|─'">
 			<tooltip>Left vs center justify for lyrics</tooltip>
 		</button>
-		<button class="button_master" x="+250" y="+0" action="toggle '@$hideGenre'"
-				textsize="14" height="30" width="110" query="var_equal '@$hideGenre' 0 ? true : false"
-				text="SHOW GENRE">
-			<tooltip>Display track Genre.</tooltip>
+		<button class="button_master" x="+250" y="+11" action="toggle '@$hideCortina'"
+				textsize="14" height="19" width="110" query="var '@$hideCortina' ? true : false"
+				text="HIDE CORTINA">
+			<tooltip>Hide the track details of cortinas while the tanda counter is on.</tooltip>
 		</button>
 	</group>
 	</group>
